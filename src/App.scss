@@ -1,0 +1,21 @@
+.row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.no-pl {
+  padding-left: 0px !important;
+}
+
+.no-pr {
+  padding-right: 0px !important;
+}
+
+.my-container {
+  position: relative;
+
+  .my-alert {
+    position: absolute;
+    top: 15px;
+  }
+}
