@@ -1,0 +1,11 @@
+#articleTitle {
+  border: none;
+  font-weight: 500;
+  font-size: 2rem;
+  color: black;
+}
+
+#articleTitle::placeholder {
+  font-size: 2rem;
+  font-weight: normal;
+}

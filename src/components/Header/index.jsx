@@ -68,7 +68,11 @@ const Header = () => {
             className="text-reset text-decoration-none mr-3"
             to="/articles/new"
           >
-            <Button variant="outline-secondary">New article</Button>
+            {location.pathname.includes('edit') ? (
+              <Button variant="outline-danger">Delete article</Button>
+            ) : (
+              <Button variant="outline-primary">New article</Button>
+            )}
           </Link>
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} />

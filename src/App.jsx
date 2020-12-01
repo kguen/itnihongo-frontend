@@ -4,8 +4,11 @@ import { Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Header from './components/Header';
 import Home from './components/Home';
+import PrivateRoute from './components/PrivateRoute';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import ArticleEditor from './components/ArticleEditor';
+import ArticleDetails from './components/ArticleDetails';
 import UserContext from './contexts/UserContext';
 import AlertContext from './contexts/AlertContext';
 import tokenConfig from './utils/tokenConfig';
@@ -81,6 +84,21 @@ const App = () => {
               <Route exact path="/login">
                 <Login />
               </Route>
+              <PrivateRoute
+                exact
+                path="/articles/new"
+                component={ArticleEditor}
+              />
+              <PrivateRoute
+                exact
+                path="/articles/:id/edit/"
+                component={ArticleEditor}
+              />
+              <PrivateRoute
+                exact
+                path="/articles/:id"
+                component={ArticleDetails}
+              />
             </Switch>
           </Router>
         </div>

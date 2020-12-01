@@ -1,0 +1,46 @@
+.article-details {
+  height: 200vh;
+
+  .article-info {
+    margin-top: 30vh;
+    position: sticky;
+    align-self: flex-start;
+    top: 3rem;
+    width: 13rem;
+    gap: 1rem;
+
+    .author-info {
+      width: min-content;
+
+      .author-name {
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+      .author-desc {
+        font-size: 0.9rem;
+      }
+    }
+
+    .info-icon {
+      font-size: 1.5rem;
+      color: gray;
+    }
+    .info-text {
+      font-size: 0.9rem;
+    }
+  }
+
+  .article-content {
+    width: 100%;
+
+    .small-info {
+      font-size: 0.9rem;
+    }
+    .article-tags {
+      font-size: 1.2rem;
+    }
+    .comment-author {
+      font-weight: 500;
+    }
+  }
+}

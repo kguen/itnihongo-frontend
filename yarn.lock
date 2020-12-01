@@ -1015,6 +1015,58 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@ckeditor/ckeditor5-build-balloon-block@^23.1.0":
+  version "23.1.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-build-balloon-block/-/ckeditor5-build-balloon-block-23.1.0.tgz#bfc72e236385eb1961ea078c94412772cfe7afa6"
+  integrity sha512-VAiUfMxxU7jG6StuHeyUt4mcCZRolD6cHhWJACCmcah6ODmENIGtPZJ3fYi+RFpIAFXdlVznfAbYImbvr1UCYg==
+
+"@ckeditor/ckeditor5-core@^23.1.0":
+  version "23.1.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-core/-/ckeditor5-core-23.1.0.tgz#abf4eeb8a98e8b99c37ebd1ebc7912a3de7652b2"
+  integrity sha512-Y+ttPMKbsfdN+V5/lV5vG3cI6Y0pNs8+TygOojw8ZMQqJY5WrVsFQcoz2DzdTKKOn5VJqjE+mHcGjCyk37FeOw==
+  dependencies:
+    "@ckeditor/ckeditor5-engine" "^23.1.0"
+    "@ckeditor/ckeditor5-utils" "^23.1.0"
+    lodash-es "^4.17.15"
+
+"@ckeditor/ckeditor5-engine@^23.1.0":
+  version "23.1.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-engine/-/ckeditor5-engine-23.1.0.tgz#7cfdb9670a069d4559360aee7afdd1b56fbbf3a9"
+  integrity sha512-HOIkiatjq/ByqHVvkaISA0l6Vab8w6gzD1QnjMv3ldgiLMD0jUAHhUZldfpYQ0s2bG+d1l/6w7C76gT8fY4/Jw==
+  dependencies:
+    "@ckeditor/ckeditor5-utils" "^23.1.0"
+    lodash-es "^4.17.15"
+
+"@ckeditor/ckeditor5-react@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-react/-/ckeditor5-react-3.0.0.tgz#05a1bdd7b26a8c1df6fd734376ea84e394d6ab47"
+  integrity sha512-kqoD0rbGeUp7CjYBtKcwXVVSWO/VL1QsoTyeGbFyoMHmkM96fBj0TI0Xs2kFqKkeiICtAnwvul3GVNWbIlK/Tw==
+  dependencies:
+    prop-types "^15.7.2"
+
+"@ckeditor/ckeditor5-theme-lark@^23.1.0":
+  version "23.1.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-theme-lark/-/ckeditor5-theme-lark-23.1.0.tgz#8ce183a343e092446739398a955a5615e37274e3"
+  integrity sha512-XDSZZ9pY4GTI8PlN/ooteKwjX6+5N88FdLeUmlXMKh7L0ej2/Auz7mIidpHxGAOyjc6pATF2tTyY5iPAUi2W3w==
+  dependencies:
+    "@ckeditor/ckeditor5-ui" "^23.1.0"
+
+"@ckeditor/ckeditor5-ui@^23.1.0":
+  version "23.1.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-ui/-/ckeditor5-ui-23.1.0.tgz#8723f61452a5be12d4711e976d814be01ee82920"
+  integrity sha512-Rw1mnp4D5SwuCHTnDhTnKzXgQbUzZHpXlce6Zf72Iw6ZfwDn2SlanIp8OKM8hYUAkoHHKLDx2QfXgHEiShC7CA==
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^23.1.0"
+    "@ckeditor/ckeditor5-utils" "^23.1.0"
+    lodash-es "^4.17.15"
+
+"@ckeditor/ckeditor5-utils@^23.1.0":
+  version "23.1.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-23.1.0.tgz#93d30c8bf0287e842af063e37bf528807ae275ed"
+  integrity sha512-hbAIQQrUFZZGGsEG07Em2iH216Y7NWIhY60HqOT94wwnn/F5ZE3zRWU+KsAR1Cn2U0uOEBkYP9qIFlGRzPo7Vg==
+  dependencies:
+    lodash-es "^4.17.15"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -9505,6 +9557,14 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+raw-loader@3:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-3.1.0.tgz#5e9d399a5a222cc0de18f42c3bc5e49677532b3f"
+  integrity sha512-lzUVMuJ06HF4rYveaz9Tv0WRlUMxJ0Y1hgSkkgg+50iEdaI0TthyEDe08KIHb0XsF6rn8WYTqPCaGTZg3sX+qA==
+  dependencies:
+    loader-utils "^1.1.0"
+    schema-utils "^2.0.1"
+
 react-app-polyfill@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-2.0.0.tgz#a0bea50f078b8a082970a9d853dc34b6dcc6a3cf"
@@ -9589,6 +9649,11 @@ react-fast-compare@^2.0.1:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+
+react-icons@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.1.0.tgz#9ca9bcbf2e3aee8e86e378bb9d465842947bbfc3"
+  integrity sha512-FCXBg1JbbR0vWALXIxmFAfozHdVIJmmwCD81Jk0EKOt7Ax4AdBNcaRkWhR0NaKy9ugJgoY3fFvo0PHpte55pXg==
 
 react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
@@ -10318,7 +10383,7 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-schema-utils@^2.6.1, schema-utils@^2.6.5, schema-utils@^2.7.0, schema-utils@^2.7.1:
+schema-utils@^2.0.1, schema-utils@^2.6.1, schema-utils@^2.6.5, schema-utils@^2.7.0, schema-utils@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.7.1.tgz#1ca4f32d1b24c590c203b8e7a50bf0ea4cd394d7"
   integrity sha512-SHiNtMOUGWBQJwzISiVYKu82GiV4QYGePp3odlY1tuKO7gPtphAT5R/py0fA6xtbgLL/RvtJZnU9b8s0F1q0Xg==

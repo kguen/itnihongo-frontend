@@ -9,18 +9,21 @@ const ArticlePreview = () => {
         <div className="d-flex align-items-center justify-content-between mb-2">
           <div className="article-author">
             <img
-              src="https://miro.medium.com/fit/c/25/25/0*IEP3z0HdLYAjHBvk.jpg"
+              src="https://miro.medium.com/fit/c/262/262/1*HQTxFkIf5fymNTatLc0qjA.jpeg"
               alt="author avatar"
               width="20"
               height="20"
               className="rounded-circle"
             />
-            <Link className="ml-2 text-reset text-decoration-none" to="/">
-              Hugh McGuire
+            <Link
+              className="author-name ml-2 text-reset text-decoration-none"
+              to="/"
+            >
+              Kaki Okumura
             </Link>
           </div>
         </div>
-        <Link className="text-reset text-decoration-none" to="/">
+        <Link className="text-reset text-decoration-none" to="/articles/1">
           <h4>Simple Authentication Guide with Ruby on Rails</h4>
           <div className="article-preview mb-1">
             This is a simple tutorial on implementing
