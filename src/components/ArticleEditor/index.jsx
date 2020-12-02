@@ -64,8 +64,8 @@ const ArticleEditor = () => {
         },
         tokenConfig(user)
       )
-      .then(res => {
-        history.push(`/articles/${articleId}`);
+      .then(({ data }) => {
+        history.push(`/articles/${data.data.id}`);
         setAlert({
           hasAlert: true,
           message: 'Article created!',
