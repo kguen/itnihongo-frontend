@@ -1,13 +1,18 @@
 import React, { useContext } from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
 import { Button, Dropdown } from 'react-bootstrap';
+import axios from 'axios';
 import UserContext from '../../contexts/UserContext';
 import AlertContext from '../../contexts/AlertContext';
+import tokenConfig from '../../utils/tokenConfig';
 import './styles.scss';
 
 const Header = () => {
   const history = useHistory();
   const location = useLocation();
+  const articleId = location.pathname.includes('edit')
+    ? location.pathname.split('/')[2]
+    : '';
   const { user, setUser } = useContext(UserContext);
   const { setAlert } = useContext(AlertContext);
 
@@ -23,8 +28,34 @@ const Header = () => {
     });
     setAlert({
       hasAlert: true,
-      message: 'Logged out!',
+      message: 'Logged out.',
     });
+  };
+
+  const deleteArticle = () => {
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    const toDelete = confirm('Are you sure?');
+    if (toDelete && articleId) {
+      axios
+        .delete(
+          `http://localhost:3030/api/v1/users/articles/${articleId}`,
+          tokenConfig(user)
+        )
+        .then(res => {
+          history.push('/');
+          setAlert({
+            hasAlert: true,
+            message: 'Article deleted!',
+          });
+        })
+        .catch(err => {
+          setAlert({
+            hasAlert: true,
+            message: 'Something wrong has happened when deleting your article.',
+            error: true,
+          });
+        });
+    }
   };
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -64,16 +95,22 @@ const Header = () => {
       </Link>
       {user.token ? (
         <div className="d-flex align-items-center">
-          <Link
-            className="text-reset text-decoration-none mr-3"
-            to="/articles/new"
-          >
-            {location.pathname.includes('edit') ? (
-              <Button variant="outline-danger">Delete article</Button>
-            ) : (
+          {location.pathname.includes('edit') ? (
+            <Button
+              className="mr-3"
+              variant="outline-danger"
+              onClick={deleteArticle}
+            >
+              Delete article
+            </Button>
+          ) : (
+            <Link
+              className="text-reset text-decoration-none mr-3"
+              to="/articles/new"
+            >
               <Button variant="outline-primary">New article</Button>
-            )}
-          </Link>
+            </Link>
+          )}
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} />
             <Dropdown.Menu align="right">

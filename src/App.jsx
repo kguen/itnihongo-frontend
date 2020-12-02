@@ -94,11 +94,9 @@ const App = () => {
                 path="/articles/:id/edit/"
                 component={ArticleEditor}
               />
-              <PrivateRoute
-                exact
-                path="/articles/:id"
-                component={ArticleDetails}
-              />
+              <Route exact path="/articles/:id">
+                <ArticleDetails />
+              </Route>
             </Switch>
           </Router>
         </div>
