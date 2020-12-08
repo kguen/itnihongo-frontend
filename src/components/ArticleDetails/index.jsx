@@ -164,7 +164,7 @@ const ArticleDetails = () => {
         </div>
         <div className="d-flex text-muted align-items-center">
           <AiOutlineComment className="info-icon" />
-          <span className="ml-2 info-text">10</span>
+          <span className="ml-2 info-text">{comments.length}</span>
         </div>
       </div>
       <div className="ml-5 article-content">

@@ -25,7 +25,7 @@ const ArticleEditor = () => {
       axios
         .get(`http://localhost:3030/api/v1/users/articles/${articleId}`)
         .then(({ data }) => {
-          if (data.author_id !== user.id) {
+          if (data.author_id !== user.data.id) {
             history.push('/');
             setAlert({
               hasAlert: true,
@@ -52,7 +52,7 @@ const ArticleEditor = () => {
           });
         });
     }
-  }, []);
+  }, [user.data]);
 
   const postArticle = () => {
     const formData = new FormData();
