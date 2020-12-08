@@ -139,9 +139,14 @@ const Header = () => {
           </Dropdown>
         </div>
       ) : (
-        <Link className="text-reset text-decoration-none" to="/signup">
-          <Button variant="outline-success">Sign Up</Button>
-        </Link>
+        <div className="d-flex align-items-center">
+          <Link className="text-reset text-decoration-none mr-2" to="/login">
+            <Button variant="outline-primary">Sign In</Button>
+          </Link>
+          <Link className="text-reset text-decoration-none" to="/signup">
+            <Button variant="outline-success">Sign Up</Button>
+          </Link>
+        </div>
       )}
     </header>
   );

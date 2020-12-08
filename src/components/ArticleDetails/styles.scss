@@ -30,6 +30,15 @@
     }
   }
 
+  .article-image {
+    width: 100%;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
   .article-content {
     width: 100%;
 

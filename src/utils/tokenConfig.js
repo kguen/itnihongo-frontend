@@ -1,7 +1,7 @@
-const tokenConfig = user => {
+const tokenConfig = (user, formData = false) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': formData ? 'multipart/form-data' : 'application/json',
     },
   };
   if (user.token) {

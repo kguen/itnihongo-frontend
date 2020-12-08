@@ -53,7 +53,7 @@ const ArticlePreview = ({ article }) => {
       </div>
       <div className="col-4 no-pr">
         <img
-          src="https://miro.medium.com/max/875/0*v79zUcR07Rdg6otp"
+          src={article.featured_image}
           alt="article"
           className="article-img"
         />

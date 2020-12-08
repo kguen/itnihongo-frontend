@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import ArticlePreview from '../ArticlePreview';
-import ArticlePreviewDummy from '../ArticlePreviewDummy';
 import AlertContext from '../../contexts/AlertContext';
 
 const Home = () => {
@@ -30,9 +29,6 @@ const Home = () => {
         {articles.map(item => (
           <ArticlePreview article={item} key={item.id} />
         ))}
-        <ArticlePreviewDummy />
-        <ArticlePreviewDummy />
-        <ArticlePreviewDummy />
       </div>
     </div>
   );

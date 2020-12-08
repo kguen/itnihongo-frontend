@@ -11,6 +11,7 @@ const schema = yup.object({
   fullName: yup
     .string()
     .required('Name is required')
+    .min(5, 'Name must be at least 5 characters long')
     .max(255, 'Name is too long'),
   email: yup
     .string()

@@ -14,6 +14,7 @@ const ArticleEditor = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tags, setTags] = useState([]);
+  const [image, setImage] = useState(null);
   const history = useHistory();
   const { id: articleId } = useParams();
   const { user } = useContext(UserContext);
@@ -54,15 +55,19 @@ const ArticleEditor = () => {
   }, []);
 
   const postArticle = () => {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('detail', content);
+    formData.append('featured_image', image);
+    formData.append(
+      'categories',
+      JSON.stringify(tags.map(item => ({ name: item.text })))
+    );
     axios
       .post(
         'http://localhost:3030/api/v1/users/articles',
-        {
-          title,
-          detail: content,
-          categories: tags.map(item => ({ name: item.text })),
-        },
-        tokenConfig(user)
+        formData,
+        tokenConfig(user, true)
       )
       .then(({ data }) => {
         history.push(`/articles/${data.data.id}`);
@@ -81,15 +86,20 @@ const ArticleEditor = () => {
   };
 
   const editArticle = () => {
+    const formData = new FormData();
+    if (title) formData.append('title', title);
+    if (content) formData.append('detail', content);
+    if (image) formData.append('featured_image', image);
+    if (tags.length)
+      formData.append(
+        'categories',
+        JSON.stringify(tags.map(item => ({ name: item.text })))
+      );
     axios
       .put(
         `http://localhost:3030/api/v1/users/articles/${articleId}`,
-        {
-          title,
-          detail: content,
-          categories: tags.map(item => ({ name: item.text })),
-        },
-        tokenConfig(user)
+        formData,
+        tokenConfig(user, true)
       )
       .then(res => {
         history.push(`/articles/${articleId}`);
@@ -135,9 +145,8 @@ const ArticleEditor = () => {
         }}
         onChange={(event, editor) => setContent(editor.getData())}
       />
-      <Form.Group className="my-4">
+      <Form.Group className="mt-4">
         <ReactTags
-          inline
           tags={tags}
           handleDelete={tagId =>
             setTags(tags.filter((tag, index) => index !== tagId))
@@ -151,6 +160,16 @@ const ArticleEditor = () => {
             setTags(newTags);
           }}
           delimiters={[188, 13, 32]}
+        />
+      </Form.Group>
+      <Form.Group className="my-4">
+        <Form.File
+          name="file"
+          className={image ? 'has-image' : ''}
+          accept="image/png, image/jpeg"
+          label={image ? image.name : 'Choose one image for your article'}
+          onChange={event => setImage(event.target.files[0])}
+          custom
         />
       </Form.Group>
       <Button className="ml-2" variant="outline-success" type="submit">

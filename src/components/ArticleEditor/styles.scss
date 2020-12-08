@@ -13,6 +13,19 @@
     font-weight: normal;
   }
 
+  .custom-file {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    width: 70%;
+  }
+  .custom-file-label {
+    border: none;
+    color: grey;
+  }
+  .has-image .custom-file-label {
+    color: black;
+  }
   div.ReactTags__tags {
     position: relative;
   }
