@@ -30,6 +30,7 @@ const ArticleDetails = () => {
   dayjs.extend(relativeTime);
 
   useEffect(() => {
+    setSuggestion([]);
     axios
       .get(`http://localhost:3030/api/v1/users/articles/${articleId}`)
       .then(({ data }) => {
@@ -58,11 +59,9 @@ const ArticleDetails = () => {
       });
 
     axios
-      .get(
-        `http://localhost:3030/api/v1/users/articles/?suggest_id=${articleId}/`
-      )
+      .get(`http://localhost:3030/api/v1/article/suggestion?id=${articleId}/`)
       .then(({ data }) => {
-        setSuggestion(data.data.articles);
+        setSuggestion(data.data.articles_suggest);
       })
       .catch(err => {
         setAlert({
@@ -137,7 +136,7 @@ const ArticleDetails = () => {
   }
   return (
     <div className="mt-5 article-details d-flex">
-      <div className="article-info d-flex flex-column">
+      <div className="article-side-info d-flex flex-column">
         <Link
           className="author-info text-reset text-decoration-none border-bottom pb-3"
           to="/"
