@@ -104,7 +104,7 @@ const ArticleEditor = () => {
     }
   };
 
-  const editArticle = () => {
+  const editArticle = async () => {
     try {
       const categoryData = await axios.post(
         'http://4252beec7086.ngrok.io/suggest_category',
@@ -147,7 +147,7 @@ const ArticleEditor = () => {
       console.log(err.response);
       setAlert({
         hasAlert: true,
-        message: 'Something wrong has happened when creating your article.',
+        message: 'Something wrong has happened when updating your article.',
         error: true,
       });
     }
