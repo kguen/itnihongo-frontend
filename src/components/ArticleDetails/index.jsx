@@ -18,6 +18,7 @@ const ArticleDetails = () => {
   const [article, setArticle] = useState(null);
   const [comments, setComments] = useState([]);
   const [suggestion, setSuggestion] = useState([]);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { id: articleId } = useParams();
   const [userComment, setUserComment] = useState({
@@ -31,6 +32,7 @@ const ArticleDetails = () => {
 
   useEffect(() => {
     setSuggestion([]);
+    setLoading(true);
     axios
       .get(`http://localhost:3030/api/v1/users/articles/${articleId}`)
       .then(({ data }) => {
@@ -62,6 +64,7 @@ const ArticleDetails = () => {
       .get(`http://localhost:3030/api/v1/article/suggestion?id=${articleId}/`)
       .then(({ data }) => {
         setSuggestion(data.data.articles_suggest);
+        setLoading(false);
       })
       .catch(err => {
         setAlert({
@@ -69,6 +72,7 @@ const ArticleDetails = () => {
           message: 'Something wrong has happened when retrieving data.',
           error: true,
         });
+        setLoading(false);
       });
   }, [articleId]);
 
@@ -263,9 +267,15 @@ const ArticleDetails = () => {
         </div>
         <div className="article-suggest mt-4">
           <h4 className="mb-4">Recommended articles</h4>
-          {suggestion.map(item => (
-            <ArticlePreview article={item} key={item.id} />
-          ))}
+          {loading ? (
+            <span>Loading...</span>
+          ) : (
+            <>
+              {suggestion.map(item => (
+                <ArticlePreview article={item} key={item.id} />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

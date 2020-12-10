@@ -116,13 +116,20 @@ const ArticleEditor = () => {
       if (title) formData.append('title', title);
       if (content) formData.append('detail', content);
       if (image) formData.append('featured_image', image);
-      formData.append(
-        'categories',
-        JSON.stringify([
-          ...tags.map(item => ({ name: item.text })),
-          { name: categoryData.data.category },
-        ])
-      );
+      if (!tags.find(item => item.text === categoryData.data.category)) {
+        formData.append(
+          'categories',
+          JSON.stringify([
+            ...tags.map(item => ({ name: item.text })),
+            { name: categoryData.data.category },
+          ])
+        );
+      } else {
+        formData.append(
+          'categories',
+          JSON.stringify([...tags.map(item => ({ name: item.text }))])
+        );
+      }
       axios
         .put(
           `http://localhost:3030/api/v1/users/articles/${articleId}`,
