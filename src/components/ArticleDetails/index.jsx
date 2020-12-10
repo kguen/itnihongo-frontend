@@ -83,57 +83,53 @@ const ArticleDetails = () => {
 
   const handleComment = event => {
     event.preventDefault();
-    if (!userComment.id) {
-      axios
-        .post(
-          'http://localhost:3030/api/v1/article/comments',
-          userComment,
-          tokenConfig(user)
-        )
-        .then(({ data }) => {
-          setComments([
-            { user: user.data.user_name, ...data.data },
-            ...comments,
-          ]);
-          setAlert({
-            hasAlert: true,
-            message: 'Comment added!',
-          });
-        })
-        .catch(err => {
-          setAlert({
-            hasAlert: true,
-            message: 'Something wrong has happened when posting your comment.',
-            error: true,
-          });
+    axios
+      .post(
+        'http://localhost:3030/api/v1/article/comments',
+        userComment,
+        tokenConfig(user)
+      )
+      .then(({ data }) => {
+        setComments([{ user: user.data.user_name, ...data.data }, ...comments]);
+        setAlert({
+          hasAlert: true,
+          message: 'Comment added!',
         });
-    } else {
-      axios
-        .patch(
-          `http://localhost:3030/api/v1/article/comments/${userComment.id}`,
-          userComment,
-          tokenConfig(user)
-        )
-        .then(({ data }) => {
-          console.log({ ...data.data });
-          setComments([
-            { user: user.data.user_name, ...data.data },
-            ...comments.filter(item => item.id !== userComment.id),
-          ]);
-          setUserComment(data.data);
-          setAlert({
-            hasAlert: true,
-            message: 'Comment updated!',
-          });
-        })
-        .catch(err => {
-          setAlert({
-            hasAlert: true,
-            message: 'Something wrong has happened when posting your comment.',
-            error: true,
-          });
+      })
+      .catch(err => {
+        setAlert({
+          hasAlert: true,
+          message: 'Something wrong has happened when posting your comment.',
+          error: true,
         });
-    }
+      });
+    // } else {
+    //   axios
+    //     .patch(
+    //       `http://localhost:3030/api/v1/article/comments/${userComment.id}`,
+    //       userComment,
+    //       tokenConfig(user)
+    //     )
+    //     .then(({ data }) => {
+    //       console.log({ ...data.data });
+    //       setComments([
+    //         { user: user.data.user_name, ...data.data },
+    //         ...comments.filter(item => item.id !== userComment.id),
+    //       ]);
+    //       setUserComment(data.data);
+    //       setAlert({
+    //         hasAlert: true,
+    //         message: 'Comment updated!',
+    //       });
+    //     })
+    //     .catch(err => {
+    //       setAlert({
+    //         hasAlert: true,
+    //         message: 'Something wrong has happened when posting your comment.',
+    //         error: true,
+    //       });
+    //     });
+    // }
   };
 
   if (!article) {
