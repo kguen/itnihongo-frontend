@@ -42,14 +42,70 @@
   .article-content {
     width: 100%;
 
+    .ck-read-only {
+      padding: 0 !important;
+    }
     .small-info {
       font-size: 0.9rem;
     }
     .article-tags {
       font-size: 1.2rem;
     }
-    .comment-author {
-      font-weight: 500;
+    .comment {
+      position: relative;
+      z-index: 0;
+      right: 1rem;
+      width: calc(100% + 2rem);
+      background: white;
+      transition: background 0.1s ease-in-out;
+
+      .edit-comment-form {
+        width: 100%;
+      }
+
+      .comment-content {
+        width: 100%;
+
+        .content {
+          width: 80%;
+          word-wrap: break-word;
+          margin-bottom: 0;
+        }
+        .edit,
+        .remove {
+          padding: 0;
+          border: none;
+          outline: none;
+          display: flex;
+          align-items: center;
+          color: white;
+          background: transparent;
+          transition: color 0.1s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .comment-author {
+          font-weight: 500;
+        }
+      }
+    }
+    .comment::after {
+      content: '';
+      position: absolute;
+      background: #dee2e6;
+      width: calc(100% - 2rem);
+      bottom: 0;
+      height: 1px;
+    }
+    .comment:hover {
+      background: rgb(247, 247, 247);
+
+      .edit,
+      .remove {
+        color: rgba(0, 0, 0, 0.45);
+      }
+    }
+    .edit:hover,
+    .remove:hover {
+      transform: scale(1.2, 1.2);
     }
   }
 }

@@ -7,7 +7,7 @@ import './styles.scss';
 
 const ArticlePreview = ({ article }) => {
   return (
-    <div className="row mb-5 pb-4 border-bottom">
+    <div className="row align-items-center article-preview border-bottom">
       <div className="col-8 no-pl">
         <div className="d-flex align-items-center justify-content-between mb-2">
           <div className="article-author">
@@ -31,7 +31,7 @@ const ArticlePreview = ({ article }) => {
           to={`/articles/${article.id}`}
         >
           <h4>{article.title}</h4>
-          <div className="article-preview mb-1">
+          <div className="article-content-preview mb-1">
             {htmlToText(article.detail, {
               baseElement: 'p',
             }).slice(0, 130)}
@@ -39,7 +39,7 @@ const ArticlePreview = ({ article }) => {
               baseElement: 'p',
             }).length > 130 && '...'}
           </div>
-          <small className="article-info text-muted">
+          <small className="article-preview-info text-muted">
             {dayjs(article.created_at).format('MMM DD, YYYY')} ·{' '}
             {Math.max(1, Math.ceil(extractText(article.content).length / 250))}{' '}
             min read
@@ -47,7 +47,9 @@ const ArticlePreview = ({ article }) => {
         </Link>
         <div className="mt-2 article-tags">
           {article.categories.map(item => (
-            <small className="tag rounded px-2 py-1 mr-1">{item.name}</small>
+            <small className="tag rounded px-2 py-1 mr-1" key={item.id}>
+              {item.name}
+            </small>
           ))}
         </div>
       </div>

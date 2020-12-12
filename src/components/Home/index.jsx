@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ArticlePreview from '../ArticlePreview';
 import AlertContext from '../../contexts/AlertContext';
@@ -24,6 +25,9 @@ const Home = () => {
 
   return (
     <div className="d-flex mt-5">
+      <Helmet>
+        <title>Home | Tech Blog</title>
+      </Helmet>
       <div className="recent-articles mr-4 w-75">
         <h3 className="mb-5">Recent articles</h3>
         {articles.map(item => (

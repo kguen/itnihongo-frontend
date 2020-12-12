@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { htmlToText } from 'html-to-text';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import BalloonBlockEditor from '@ckeditor/ckeditor5-build-balloon-block';
 import { WithContext as ReactTags } from 'react-tag-input';
@@ -26,7 +26,7 @@ const ArticleEditor = () => {
       axios
         .get(`http://localhost:3030/api/v1/users/articles/${articleId}`)
         .then(({ data }) => {
-          if (data.data.author_id !== user.data.id) {
+          if (data.data.author_id !== user.data?.id) {
             history.push('/');
             setAlert({
               hasAlert: true,
@@ -45,6 +45,7 @@ const ArticleEditor = () => {
           }
         })
         .catch(err => {
+          console.log(err);
           history.push('/');
           setAlert({
             hasAlert: true,
@@ -55,102 +56,67 @@ const ArticleEditor = () => {
     }
   }, [user.data]);
 
-  const postArticle = async () => {
-    try {
-      const categoryData = await axios.post(
-        'http://4252beec7086.ngrok.io/suggest_category',
-        {
-          query: htmlToText(content),
-        }
-      );
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('detail', content);
-      formData.append('featured_image', image);
-      formData.append(
-        'categories',
-        JSON.stringify([
-          ...tags.map(item => ({ name: item.text })),
-          { name: categoryData.data.category },
-        ])
-      );
-      axios
-        .post(
-          'http://localhost:3030/api/v1/users/articles',
-          formData,
-          tokenConfig(user, true)
-        )
-        .then(({ data }) => {
-          history.push(`/articles/${data.data.id}`);
-          setAlert({
-            hasAlert: true,
-            message: 'Article created!',
-          });
-        })
-        .catch(err => {
-          setAlert({
-            hasAlert: true,
-            message: 'Something wrong has happened when creating your article.',
-            error: true,
-          });
+  const postArticle = () => {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('detail', content);
+    formData.append('featured_image', image);
+    formData.append(
+      'categories',
+      JSON.stringify(tags.map(item => ({ name: item.text })))
+    );
+    axios
+      .post(
+        'http://localhost:3030/api/v1/users/articles',
+        formData,
+        tokenConfig(user, true)
+      )
+      .then(({ data }) => {
+        history.push(`/articles/${data.data.id}`);
+        setAlert({
+          hasAlert: true,
+          message: 'Article created!',
         });
-    } catch (err) {
-      console.log(err.response);
-      setAlert({
-        hasAlert: true,
-        message: 'Something wrong has happened when creating your article.',
-        error: true,
+      })
+      .catch(err => {
+        setAlert({
+          hasAlert: true,
+          message: `${err.response.data.errors[0]}.`,
+          error: true,
+        });
       });
-    }
   };
 
   const editArticle = () => {
-    try {
-      const categoryData = await axios.post(
-        'http://4252beec7086.ngrok.io/suggest_category',
-        {
-          query: htmlToText(content),
-        }
-      );
-      const formData = new FormData();
-      if (title) formData.append('title', title);
-      if (content) formData.append('detail', content);
-      if (image) formData.append('featured_image', image);
+    const formData = new FormData();
+    if (title) formData.append('title', title);
+    if (content) formData.append('detail', content);
+    if (image) formData.append('featured_image', image);
+    if (tags.length)
       formData.append(
         'categories',
-        JSON.stringify([
-          ...tags.map(item => ({ name: item.text })),
-          { name: categoryData.data.category },
-        ])
+        JSON.stringify(tags.map(item => ({ name: item.text })))
       );
-      axios
-        .put(
-          `http://localhost:3030/api/v1/users/articles/${articleId}`,
-          formData,
-          tokenConfig(user, true)
-        )
-        .then(res => {
-          history.push(`/articles/${articleId}`);
-          setAlert({
-            hasAlert: true,
-            message: 'Article updated!',
-          });
-        })
-        .catch(err => {
-          setAlert({
-            hasAlert: true,
-            message: 'Something wrong has happened when updating your article.',
-            error: true,
-          });
+    axios
+      .put(
+        `http://localhost:3030/api/v1/users/articles/${articleId}`,
+        formData,
+        tokenConfig(user, true)
+      )
+      .then(res => {
+        history.push(`/articles/${articleId}`);
+        setAlert({
+          hasAlert: true,
+          message: 'Article updated!',
         });
-    } catch (err) {
-      console.log(err.response);
-      setAlert({
-        hasAlert: true,
-        message: 'Something wrong has happened when creating your article.',
-        error: true,
+      })
+      .catch(err => {
+        setAlert({
+          hasAlert: true,
+          message: `${err.response.data.errors[0]}.`,
+          error: true,
+        });
       });
-    }
   };
 
   return (
@@ -165,12 +131,17 @@ const ArticleEditor = () => {
         }
       }}
     >
+      <Helmet>
+        <title>{articleId ? 'Edit article' : 'New article'} | Tech Blog</title>
+      </Helmet>
       <Form.Group controlId="articleTitle">
         <Form.Control
           type="text"
           value={title}
           placeholder="Article title"
           onChange={event => setTitle(event.target.value)}
+          minLength={1}
+          maxLength={100}
         />
       </Form.Group>
       <CKEditor
@@ -181,7 +152,7 @@ const ArticleEditor = () => {
         }}
         onChange={(event, editor) => setContent(editor.getData())}
       />
-      <Form.Group className="mt-4">
+      <Form.Group className="mt-4 form-tags">
         <ReactTags
           tags={tags}
           handleDelete={tagId =>

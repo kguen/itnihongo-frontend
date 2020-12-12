@@ -3,10 +3,12 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Form, Button } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import BalloonBlockEditor from '@ckeditor/ckeditor5-build-balloon-block';
 import { AiOutlineLike, AiOutlineComment } from 'react-icons/ai';
+import { FiEdit, FiTrash } from 'react-icons/fi';
 import ArticlePreview from '../ArticlePreview';
 import UserContext from '../../contexts/UserContext';
 import AlertContext from '../../contexts/AlertContext';
@@ -30,6 +32,7 @@ const ArticleDetails = () => {
   dayjs.extend(relativeTime);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     axios
       .get(`http://localhost:3030/api/v1/users/articles/${articleId}`)
       .then(({ data }) => {
@@ -47,7 +50,13 @@ const ArticleDetails = () => {
     axios
       .get(`http://localhost:3030/api/v1/article/comments?id=${articleId}/`)
       .then(({ data }) => {
-        setComments(data.data.comments);
+        setComments(
+          data.data.comments.map(item => ({
+            ...item,
+            editing: false,
+            editContent: item.detail,
+          }))
+        );
       })
       .catch(err => {
         setAlert({
@@ -73,15 +82,7 @@ const ArticleDetails = () => {
       });
   }, [articleId]);
 
-  useEffect(() => {
-    if (user.data && comments.length) {
-      console.log(user);
-      const filtered = comments.find(item => item.user_id === user.data.id);
-      if (filtered) setUserComment(filtered);
-    }
-  }, [articleId, user.data, comments.length]);
-
-  const handleComment = event => {
+  const postComment = event => {
     event.preventDefault();
     axios
       .post(
@@ -90,7 +91,16 @@ const ArticleDetails = () => {
         tokenConfig(user)
       )
       .then(({ data }) => {
-        setComments([{ user: user.data.user_name, ...data.data }, ...comments]);
+        setComments([
+          {
+            user: user.data.user_name,
+            ...data.data,
+            editing: false,
+            editContent: data.data.detail,
+          },
+          ...comments,
+        ]);
+        setUserComment({ ...userComment, detail: '' });
         setAlert({
           hasAlert: true,
           message: 'Comment added!',
@@ -99,37 +109,70 @@ const ArticleDetails = () => {
       .catch(err => {
         setAlert({
           hasAlert: true,
-          message: 'Something wrong has happened when posting your comment.',
+          message: `${err.response.data.errors[0]}.`,
           error: true,
         });
       });
-    // } else {
-    //   axios
-    //     .patch(
-    //       `http://localhost:3030/api/v1/article/comments/${userComment.id}`,
-    //       userComment,
-    //       tokenConfig(user)
-    //     )
-    //     .then(({ data }) => {
-    //       console.log({ ...data.data });
-    //       setComments([
-    //         { user: user.data.user_name, ...data.data },
-    //         ...comments.filter(item => item.id !== userComment.id),
-    //       ]);
-    //       setUserComment(data.data);
-    //       setAlert({
-    //         hasAlert: true,
-    //         message: 'Comment updated!',
-    //       });
-    //     })
-    //     .catch(err => {
-    //       setAlert({
-    //         hasAlert: true,
-    //         message: 'Something wrong has happened when posting your comment.',
-    //         error: true,
-    //       });
-    //     });
-    // }
+  };
+
+  const editComment = (event, index) => {
+    event.preventDefault();
+    axios
+      .patch(
+        `http://localhost:3030/api/v1/article/comments/${comments[index].id}`,
+        {
+          ...comments[index],
+          detail: comments[index].editContent,
+        },
+        tokenConfig(user)
+      )
+      .then(({ data }) => {
+        const newComments = comments;
+        newComments[index] = {
+          ...data.data,
+          user: user.data.user_name,
+          editing: false,
+          editContent: data.data.detail,
+        };
+        setComments(newComments);
+        setAlert({
+          hasAlert: true,
+          message: 'Comment updated!',
+        });
+      })
+      .catch(err => {
+        setAlert({
+          hasAlert: true,
+          message: `${err.response.data.errors[0]}.`,
+          error: true,
+        });
+      });
+  };
+
+  const deleteComment = commentId => {
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    const toDelete = confirm('Are you sure?');
+    if (toDelete) {
+      axios
+        .delete(
+          `http://localhost:3030/api/v1/article/comments/${commentId}`,
+          tokenConfig(user)
+        )
+        .then(({ data }) => {
+          setComments(comments.filter(item => item.id !== commentId));
+          setAlert({
+            hasAlert: true,
+            message: 'Comment deleted!',
+          });
+        })
+        .catch(err => {
+          setAlert({
+            hasAlert: true,
+            message: `${err.response.data.errors[0]}.`,
+            error: true,
+          });
+        });
+    }
   };
 
   if (!article) {
@@ -137,6 +180,9 @@ const ArticleDetails = () => {
   }
   return (
     <div className="mt-5 article-details d-flex">
+      <Helmet>
+        <title>{article.title} | Tech Blog</title>
+      </Helmet>
       <div className="article-info d-flex flex-column">
         <Link
           className="author-info text-reset text-decoration-none border-bottom pb-3"
@@ -168,10 +214,10 @@ const ArticleDetails = () => {
           <div className="d-flex align-items-center justify-content-between mb-4">
             <h1>{article.title}</h1>
             <Link
-              className="text-reset text-decoration-none mr-2"
+              className="text-reset text-decoration-none ml-4 mr-1"
               to={`/articles/${article.id}/edit`}
             >
-              <Button variant="outline-secondary">Edit your article</Button>
+              <Button variant="outline-info">Edit your article</Button>
             </Link>
           </div>
         ) : (
@@ -213,7 +259,7 @@ const ArticleDetails = () => {
         <div className="article-comments mb-5">
           <h4 className="mb-4">Comments ({comments.length})</h4>
           {user.token && user.data?.id !== article.author_id ? (
-            <Form className="mb-4" onSubmit={handleComment}>
+            <Form className="mb-4" onSubmit={postComment}>
               <Form.Group controlId="comment">
                 <Form.Control
                   as="textarea"
@@ -225,19 +271,18 @@ const ArticleDetails = () => {
                       detail: event.target.value,
                     })
                   }
+                  minLength={1}
+                  maxLength={100}
                   rows={2}
                 />
               </Form.Group>
-              <Button variant="outline-secondary" type="submit">
+              <Button variant="outline-success" type="submit">
                 Submit
               </Button>
             </Form>
           ) : null}
-          {comments.map(item => (
-            <div
-              className="comment pt-4 pb-3 border-bottom"
-              key={item.updated_at}
-            >
+          {comments.map((item, index) => (
+            <div className="comment px-3 py-4" key={item.updated_at}>
               <div className="comment-info d-flex align-items-center">
                 <img
                   src="https://miro.medium.com/fit/c/262/262/1*HQTxFkIf5fymNTatLc0qjA.jpeg"
@@ -258,7 +303,94 @@ const ArticleDetails = () => {
                   </div>
                 </div>
               </div>
-              <p className="comment-content mt-2">{item.detail}</p>
+              <div className="comment-content mt-3 d-flex align-items-center justify-content-between">
+                {item.editing ? (
+                  <Form
+                    className="edit-comment-form"
+                    onSubmit={event => editComment(event, index)}
+                  >
+                    <Form.Control
+                      className="mb-2"
+                      as="textarea"
+                      placeholder="What are your thoughts?"
+                      value={item.editContent}
+                      onChange={event =>
+                        setComments(
+                          comments.map(comment =>
+                            comment.id === item.id
+                              ? {
+                                  ...comment,
+                                  editContent: event.target.value,
+                                }
+                              : comment
+                          )
+                        )
+                      }
+                      minLength={1}
+                      maxLength={100}
+                      rows={2}
+                    />
+                    <Button
+                      className="mr-1"
+                      variant="outline-success"
+                      type="submit"
+                      size="sm"
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      variant="outline-secondary"
+                      type="button"
+                      size="sm"
+                      onClick={() =>
+                        setComments(
+                          comments.map(comment =>
+                            comment.id === item.id
+                              ? {
+                                  ...comment,
+                                  editContent: item.detail,
+                                  editing: false,
+                                }
+                              : comment
+                          )
+                        )
+                      }
+                    >
+                      Cancel
+                    </Button>
+                  </Form>
+                ) : (
+                  <>
+                    <p className="content">{item.detail}</p>
+                    {item.user_id === user.data?.id ? (
+                      <div className="d-flex align-items-center">
+                        <button
+                          type="button"
+                          className="edit mr-2"
+                          onClick={() =>
+                            setComments(
+                              comments.map(comment =>
+                                comment.id === item.id
+                                  ? { ...comment, editing: true }
+                                  : comment
+                              )
+                            )
+                          }
+                        >
+                          <FiEdit />
+                        </button>
+                        <button
+                          type="button"
+                          className="remove"
+                          onClick={() => deleteComment(item.id)}
+                        >
+                          <FiTrash />
+                        </button>
+                      </div>
+                    ) : null}
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
