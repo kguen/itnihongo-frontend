@@ -303,7 +303,7 @@ const ArticleDetails = () => {
               {article.author}
             </Link>
             <div className="text-muted">
-              {dayjs(article.created_at).fromNow()} ·{' '}
+              {dayjs(article.updated_at).fromNow()} ·{' '}
               {Math.max(
                 1,
                 Math.ceil(extractText(article.content).length / 250)

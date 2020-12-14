@@ -46,7 +46,7 @@ const ArticlePreview = ({ article }) => {
           </div>
           <div className="d-flex align-items-center justify-content-between">
             <small className="article-preview-info text-muted">
-              {dayjs(article.created_at).fromNow()} ·{' '}
+              {dayjs(article.updated_at).fromNow()} ·{' '}
               {Math.max(
                 1,
                 Math.ceil(extractText(article.content).length / 250)
