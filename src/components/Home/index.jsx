@@ -3,14 +3,20 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ArticlePreview from '../ArticlePreview';
 import AlertContext from '../../contexts/AlertContext';
+import './style.scss';
 
 const Home = () => {
+  const [tab, setTab] = useState(1);
   const [articles, setArticles] = useState([]);
   const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3030/api/v1/users/articles/`)
+      .get(
+        `http://localhost:3030/api/v1/users/articles/${
+          tab === 2 ? '?most_liked=true' : ''
+        }`
+      )
       .then(({ data }) => {
         setArticles(data.data.articles);
       })
@@ -21,15 +27,33 @@ const Home = () => {
           error: true,
         });
       });
-  }, []);
+  }, [tab]);
 
   return (
-    <div className="d-flex mt-5">
+    <div className="d-flex mt-5 home-container">
       <Helmet>
         <title>Home | Tech Blog</title>
       </Helmet>
-      <div className="recent-articles mr-4 w-75">
-        <h3 className="mb-5">Recent articles</h3>
+      <div className="display-articles mr-4">
+        <div className="d-flex align-items-center justify-content-between mb-5">
+          <h3>{tab === 1 ? 'Recent articles' : 'Most like articles'}</h3>
+          <div className="tabs">
+            <button
+              type="button"
+              className={`${tab === 1 ? 'active' : ''}`}
+              onClick={() => setTab(1)}
+            >
+              Recent
+            </button>
+            <button
+              type="button"
+              className={`${tab === 2 ? 'active' : ''}`}
+              onClick={() => setTab(2)}
+            >
+              Most liked
+            </button>
+          </div>
+        </div>
         {articles.map(item => (
           <ArticlePreview article={item} key={item.id} />
         ))}

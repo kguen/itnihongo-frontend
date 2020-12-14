@@ -166,7 +166,7 @@ const ArticleEditor = () => {
             newTags.splice(newPos, 0, tag);
             setTags(newTags);
           }}
-          delimiters={[188, 13, 32]}
+          delimiters={[188, 13]}
         />
       </Form.Group>
       <Form.Group className="my-4">

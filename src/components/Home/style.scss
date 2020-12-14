@@ -1,0 +1,23 @@
+.home-container {
+  .display-articles {
+    width: 66%;
+
+    .tabs {
+      button {
+        border: none;
+        outline: none;
+        padding: 0.5rem 1rem;
+        background: white;
+        font-weight: 400;
+        border-bottom: 2px solid white;
+        transition: font-weight 0.1s ease-in-out, color 0.1s ease-in-out,
+          border-bottom-color 0.1s ease-in-out;
+      }
+      button.active {
+        font-weight: 500;
+        color: var(--blue);
+        border-bottom-color: var(--blue);
+      }
+    }
+  }
+}

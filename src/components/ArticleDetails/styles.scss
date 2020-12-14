@@ -1,17 +1,16 @@
 .article-details {
   height: 200vh;
+  gap: 3rem;
 
   .article-info {
     margin-top: 30vh;
     position: sticky;
     align-self: flex-start;
     top: 3rem;
-    width: 13rem;
+    width: 10rem;
     gap: 1rem;
 
     .author-info {
-      width: min-content;
-
       .author-name {
         font-size: 1.1rem;
         font-weight: 500;
@@ -21,8 +20,31 @@
       }
     }
 
+    .like-container {
+      .like-button {
+        border: none;
+        outline: none;
+        padding: 0;
+        background: transparent;
+
+        .like-icon {
+          transition: transform 0.1s ease-in-out;
+        }
+        .like-icon:hover {
+          transform: scale(1.2, 1.2);
+        }
+        .like-icon-active {
+          color: var(--blue);
+          transform: scale(1.2, 1.2);
+        }
+      }
+      .info-text {
+        margin-top: 0.2rem;
+      }
+    }
+
     .info-icon {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: gray;
     }
     .info-text {

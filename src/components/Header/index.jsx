@@ -25,6 +25,7 @@ const Header = () => {
       ...user,
       data: null,
       token: null,
+      liked: [],
     });
     setAlert({
       hasAlert: true,

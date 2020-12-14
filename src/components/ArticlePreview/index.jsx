@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { htmlToText } from 'html-to-text';
+import { FaRegComment } from 'react-icons/fa';
+import { HiOutlineThumbUp } from 'react-icons/hi';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import extractText from '../../utils/extractText';
 import './styles.scss';
 
 const ArticlePreview = ({ article }) => {
+  dayjs.extend(relativeTime);
+
   return (
-    <div className="row align-items-center article-preview border-bottom">
+    <div className="d-flex align-items-center article-preview border-bottom">
       <div className="col-8 no-pl">
         <div className="d-flex align-items-center justify-content-between mb-2">
           <div className="article-author">
@@ -31,7 +36,7 @@ const ArticlePreview = ({ article }) => {
           to={`/articles/${article.id}`}
         >
           <h4>{article.title}</h4>
-          <div className="article-content-preview mb-1">
+          <div className="article-content-preview mb-2">
             {htmlToText(article.detail, {
               baseElement: 'p',
             }).slice(0, 130)}
@@ -39,11 +44,26 @@ const ArticlePreview = ({ article }) => {
               baseElement: 'p',
             }).length > 130 && '...'}
           </div>
-          <small className="article-preview-info text-muted">
-            {dayjs(article.created_at).format('MMM DD, YYYY')} ·{' '}
-            {Math.max(1, Math.ceil(extractText(article.content).length / 250))}{' '}
-            min read
-          </small>
+          <div className="d-flex align-items-center justify-content-between">
+            <small className="article-preview-info text-muted">
+              {dayjs(article.created_at).fromNow()} ·{' '}
+              {Math.max(
+                1,
+                Math.ceil(extractText(article.content).length / 250)
+              )}{' '}
+              min read
+            </small>
+            <small className="d-flex align-items-center mr-3">
+              <div className="d-flex text-muted align-items-center like-container">
+                <HiOutlineThumbUp className="info-icon like-icon" />
+                <span className="info-text">{article.likes}</span>
+              </div>
+              <div className="d-flex text-muted align-items-center comment-count">
+                <FaRegComment className="info-icon" />
+                <span className="info-text">{article.comment_count}</span>
+              </div>
+            </small>
+          </div>
         </Link>
         <div className="mt-2 article-tags">
           {article.categories.map(item => (
@@ -53,12 +73,8 @@ const ArticlePreview = ({ article }) => {
           ))}
         </div>
       </div>
-      <div className="col-4 no-pr">
-        <img
-          src={article.featured_image}
-          alt="article"
-          className="article-img"
-        />
+      <div className="col-4 no-pr article-img">
+        <img src={article.featured_image} alt="article" />
       </div>
     </div>
   );

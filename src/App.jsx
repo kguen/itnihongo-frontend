@@ -18,6 +18,7 @@ const App = () => {
   const [user, setUser] = useState({
     token: localStorage.getItem('token'),
     data: null,
+    liked: [],
   });
   const [alert, setAlert] = useState({
     hasAlert: false,
@@ -35,10 +36,11 @@ const App = () => {
     if (user.token) {
       axios
         .get('http://localhost:3030/api/v1/auth/me', tokenConfig(user))
-        .then(res => {
+        .then(({ data }) => {
           setUser({
             ...user,
-            data: res.data.data,
+            data: data.data,
+            liked: data.liked,
           });
         })
         .catch(err => {
@@ -46,7 +48,8 @@ const App = () => {
           setUser({
             ...user,
             token: null,
-            user: null,
+            data: null,
+            liked: [],
           });
         });
     }

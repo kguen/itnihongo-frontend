@@ -7,7 +7,8 @@ import { Helmet } from 'react-helmet';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import BalloonBlockEditor from '@ckeditor/ckeditor5-build-balloon-block';
-import { AiOutlineLike, AiOutlineComment } from 'react-icons/ai';
+import { FaRegComment } from 'react-icons/fa';
+import { HiOutlineThumbUp, HiThumbUp } from 'react-icons/hi';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import ArticlePreview from '../ArticlePreview';
 import UserContext from '../../contexts/UserContext';
@@ -18,6 +19,7 @@ import './styles.scss';
 
 const ArticleDetails = () => {
   const [article, setArticle] = useState(null);
+  const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [suggestion, setSuggestion] = useState([]);
   const history = useHistory();
@@ -27,9 +29,13 @@ const ArticleDetails = () => {
     article_id: articleId,
   });
   const { setAlert } = useContext(AlertContext);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   dayjs.extend(relativeTime);
+
+  useEffect(() => {
+    setLiked(user.liked.includes(parseInt(articleId, 10)));
+  }, [user.liked.length]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -175,6 +181,57 @@ const ArticleDetails = () => {
     }
   };
 
+  const handleLikePost = () => {
+    if (liked) {
+      axios
+        .delete(
+          `http://localhost:3030/api/v1/article/${articleId}/likes`,
+          tokenConfig(user)
+        )
+        .then(() => {
+          setUser({
+            ...user,
+            liked: user.liked.filter(item => item !== parseInt(articleId, 10)),
+          });
+          setArticle({
+            ...article,
+            likes: article.likes - 1,
+          });
+        })
+        .catch(err => {
+          setAlert({
+            hasAlert: true,
+            message: `${err.response.data.message}.`,
+            error: true,
+          });
+        });
+    } else {
+      axios
+        .post(
+          `http://localhost:3030/api/v1/article/${articleId}/likes`,
+          null,
+          tokenConfig(user)
+        )
+        .then(() => {
+          setUser({
+            ...user,
+            liked: [...user.liked, parseInt(articleId, 10)],
+          });
+          setArticle({
+            ...article,
+            likes: article.likes + 1,
+          });
+        })
+        .catch(err => {
+          setAlert({
+            hasAlert: true,
+            message: `${err.response.data.message}.`,
+            error: true,
+          });
+        });
+    }
+  };
+
   if (!article) {
     return null;
   }
@@ -200,12 +257,22 @@ const ArticleDetails = () => {
             Author, writing contents for programmers.
           </div>
         </Link>
-        <div className="d-flex text-muted align-items-center">
-          <AiOutlineLike className="info-icon" />
-          <span className="ml-2 info-text">256</span>
+        <div className="d-flex text-muted align-items-center like-container">
+          <button
+            className="like-button"
+            type="button"
+            onClick={handleLikePost}
+          >
+            {liked ? (
+              <HiThumbUp className="info-icon like-icon-active " />
+            ) : (
+              <HiOutlineThumbUp className="info-icon like-icon" />
+            )}
+          </button>
+          <span className="ml-2 info-text">{article.likes}</span>
         </div>
         <div className="d-flex text-muted align-items-center">
-          <AiOutlineComment className="info-icon" />
+          <FaRegComment className="info-icon" />
           <span className="ml-2 info-text">{comments.length}</span>
         </div>
       </div>
@@ -236,7 +303,7 @@ const ArticleDetails = () => {
               {article.author}
             </Link>
             <div className="text-muted">
-              {dayjs(article.created_at).format('MMM DD, YYYY')} ·{' '}
+              {dayjs(article.created_at).fromNow()} ·{' '}
               {Math.max(
                 1,
                 Math.ceil(extractText(article.content).length / 250)
