@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../../contexts/UserContext';
 import AlertContext from '../../../contexts/AlertContext';
@@ -88,7 +89,14 @@ const ProfileEditForm = () => {
           }
         />
         <Form.Text className="text-muted mt-2">
-          Your name will appear on your Profile page. It is a required field.
+          Your name will appear on your{' '}
+          <Link
+            to={`/users/${user.data?.id}`}
+            className="text-muted text-decoration-none"
+          >
+            <u>Profile</u>
+          </Link>{' '}
+          page. It is a required field.
         </Form.Text>
       </Form.Group>
       <Form.Group controlId="email" className="mt-5">
@@ -120,7 +128,14 @@ const ProfileEditForm = () => {
           }
         />
         <Form.Text className="text-muted mt-2">
-          Your bio will appear on your Profile page. Max 200 characters.
+          Your bio will appear on your{' '}
+          <Link
+            to={`/users/${user.data?.id}`}
+            className="text-muted text-decoration-none"
+          >
+            <u>Profile</u>
+          </Link>{' '}
+          page. Max 200 characters.
         </Form.Text>
       </Form.Group>
       <Form.Row className="w-75 mt-5">
@@ -173,8 +188,14 @@ const ProfileEditForm = () => {
           custom
         />
         <Form.Text className="text-muted mt-2">
-          Your avatar will appear on your Profile page, your articles and
-          comments. File type: PNG or JPEG.
+          Your avatar will appear on your{' '}
+          <Link
+            to={`/users/${user.data?.id}`}
+            className="text-muted text-decoration-none"
+          >
+            <u>Profile</u>
+          </Link>{' '}
+          page, your articles and comments. File type: PNG or JPEG.
         </Form.Text>
       </Form.Group>
       <Button variant="outline-success" type="submit">
