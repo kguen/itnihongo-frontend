@@ -153,7 +153,7 @@ const ArticleEditor = () => {
         }}
         onChange={(event, editor) => setContent(editor.getData())}
       />
-      <Form.Group className="mt-4 form-tags">
+      <Form.Group className={`mt-4 form-tags ${tags.length ? 'has-tags' : ''}`}>
         <ReactTags
           tags={tags}
           handleDelete={tagId =>
@@ -180,7 +180,12 @@ const ArticleEditor = () => {
           custom
         />
       </Form.Group>
-      <Button className="ml-2" variant="outline-success" type="submit">
+      <Button
+        className="ml-2"
+        variant="outline-success"
+        type="submit"
+        disabled={!articleId && (!image || !tags.length)}
+      >
         Publish
       </Button>
     </Form>

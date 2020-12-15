@@ -40,10 +40,10 @@ const ArticlePreview = ({ article }) => {
           <div className="article-content-preview mb-2">
             {htmlToText(article.detail, {
               baseElement: 'p',
-            }).slice(0, 165)}
+            }).slice(0, 150)}
             {htmlToText(article.detail, {
               baseElement: 'p',
-            }).length > 165 && '...'}
+            }).length > 150 && '...'}
           </div>
           <div className="d-flex align-items-center justify-content-between">
             <small className="article-preview-info text-muted">

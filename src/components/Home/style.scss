@@ -1,4 +1,6 @@
 .home-container {
+  gap: 3rem;
+
   .display-articles {
     flex: 0 1 66%;
 
@@ -17,6 +19,33 @@
         font-weight: 500;
         color: var(--blue);
         border-bottom-color: var(--blue);
+      }
+    }
+  }
+  .top-authors {
+    align-self: flex-start;
+    position: sticky;
+    top: 3rem;
+    flex: 1 1 34%;
+
+    .user-info {
+      gap: 1rem;
+
+      .info {
+        gap: 0.4rem;
+        line-height: 1rem;
+
+        .name {
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+        .bio {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
       }
     }
   }

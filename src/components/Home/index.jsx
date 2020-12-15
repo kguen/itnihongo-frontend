@@ -4,6 +4,7 @@ import { Pagination } from 'react-bootstrap';
 import axios from 'axios';
 import ArticlePreview from '../ArticlePreview';
 import AlertContext from '../../contexts/AlertContext';
+import DefaultAvatar from '../../assets/images/default-avatar.png';
 import './style.scss';
 
 const Home = () => {
@@ -11,6 +12,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [articles, setArticles] = useState([]);
+  const [topUsers, setTopUsers] = useState([]);
   const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
@@ -34,6 +36,22 @@ const Home = () => {
         });
       });
   }, [tab, page]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3030/api/v1/users/')
+      .then(({ data }) => {
+        setTopUsers(data.data.users);
+      })
+      .catch(err => {
+        setAlert({
+          hasAlert: true,
+          message: 'Something wrong has happened when retrieving data.',
+          error: true,
+        });
+      });
+  }, []);
+  console.log(topUsers);
 
   return (
     <div className="d-flex mt-5 home-container">
@@ -83,6 +101,31 @@ const Home = () => {
           />
           <Pagination.Last onClick={() => setPage(totalPage)} />
         </Pagination>
+      </div>
+      <div className="top-authors d-flex flex-column">
+        <h3 className="mb-5">Top authors</h3>
+        {topUsers.map(item => (
+          <div
+            className="d-flex align-item-center mb-4 user-info"
+            key={item.id}
+          >
+            <img
+              src={item.avatar || DefaultAvatar}
+              alt="user avatar"
+              width="62"
+              height="62"
+              className="rounded-circle"
+            />
+            <div className="d-flex flex-column info">
+              <span className="name">
+                {item.name} ({item.article_count} articles)
+              </span>
+              <small className="text-muted bio">
+                {item.bio || 'Author, writing contents for Tech Blog readers.'}
+              </small>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

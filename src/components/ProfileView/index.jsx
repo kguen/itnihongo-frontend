@@ -52,7 +52,7 @@ const ProfileView = () => {
   }, [userId]);
 
   return (
-    <div className="mt-5 profile-view d-flex">
+    <div className="mt-4 profile-view d-flex">
       <Helmet>
         <title>
           {userInfo.user_name ? userInfo.user_name : ''} | Tech Blog
