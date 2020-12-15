@@ -183,7 +183,7 @@ const ArticleEditor = () => {
         className="ml-2"
         variant="outline-success"
         type="submit"
-        disabled={!articleId && (!image || !tags.length)}
+        disabled={(!articleId && !image) || !tags.length}
       >
         Publish
       </Button>
