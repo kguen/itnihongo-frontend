@@ -1,0 +1,74 @@
+.profile-view {
+  .user-info {
+    margin-top: 4rem;
+    position: sticky;
+    align-self: flex-start;
+    top: 4rem;
+    flex: 0 1 23%;
+    gap: 1rem;
+
+    .info {
+      width: 11rem;
+      .user-name {
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+      .user-bio {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  .profile-articles {
+    margin-top: 3rem;
+    flex: 1 1 77%;
+
+    .profile-article-content {
+      h2 {
+        font-size: 2.25rem;
+      }
+      .small-info {
+        font-size: 0.9rem;
+        text-decoration: underline;
+      }
+      .article-image {
+        width: 100%;
+
+        img {
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+      .ck-read-only {
+        padding: 0 !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+      }
+      .read-more {
+        margin-top: 1.25rem;
+        text-decoration: underline;
+        color: var(--green);
+        font-weight: 500;
+      }
+      .bottom-section {
+        margin-top: 1.75rem;
+        padding-bottom: 2rem;
+        margin-bottom: 2.5rem;
+
+        .article-tags {
+          font-size: 1.2rem;
+        }
+        .like-comment {
+          font-size: 1rem;
+
+          .like-container,
+          .comment-count {
+            gap: 0.3rem;
+          }
+        }
+      }
+    }
+  }
+}

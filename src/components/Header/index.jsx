@@ -12,9 +12,10 @@ import './styles.scss';
 const Header = () => {
   const history = useHistory();
   const location = useLocation();
-  const articleId = location.pathname.includes('edit')
-    ? location.pathname.split('/')[2]
-    : '';
+  const articleId =
+    location.pathname.includes('edit') && location.pathname.includes('article')
+      ? location.pathname.split('/')[2]
+      : '';
   const { user, setUser } = useContext(UserContext);
   const { setAlert } = useContext(AlertContext);
 
@@ -94,7 +95,8 @@ const Header = () => {
       </Link>
       {user.token ? (
         <div className="d-flex align-items-center">
-          {location.pathname.includes('edit') ? (
+          {location.pathname.includes('edit') &&
+          location.pathname.includes('article') ? (
             <Button
               className="mr-3"
               variant="outline-danger"
@@ -112,7 +114,7 @@ const Header = () => {
           )}
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} />
-            <Dropdown.Menu align="right" className="mt-2">
+            <Dropdown.Menu align="right">
               <Dropdown.Header>
                 <div className="d-flex align-items-center">
                   <img
@@ -130,8 +132,13 @@ const Header = () => {
                 </div>
               </Dropdown.Header>
               <Dropdown.Divider />
-              <Dropdown.Item onClick={() => history.push('/profile')}>
-                My profile
+              <Dropdown.Item
+                onClick={() => history.push(`/users/${user.data.id}`)}
+              >
+                View profile
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => history.push('/me/edit')}>
+                Edit profile
               </Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>

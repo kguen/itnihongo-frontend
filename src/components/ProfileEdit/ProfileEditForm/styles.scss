@@ -1,0 +1,25 @@
+.profile-edit-form {
+  margin-top: 2rem;
+  padding-bottom: 3rem;
+  width: 100%;
+
+  .mt-5 {
+    margin-top: 2.5rem !important;
+  }
+  .mb-5 {
+    margin-bottom: 2.5rem !important;
+  }
+  .my-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+  .custom-file-label {
+    color: var(--gray);
+  }
+  .has-image .custom-file-label {
+    color: #495057;
+  }
+  .form-group.col {
+    margin-bottom: 0;
+  }
+}

@@ -17,6 +17,7 @@ const schema = yup.object({
     .string()
     .email('Not an email')
     .required('Email is required')
+    .min(5, 'Email must be at least 5 characters long')
     .max(255, 'Email is too long'),
   password: yup
     .string()

@@ -26,7 +26,7 @@ const ArticlePreview = ({ article }) => {
             />
             <Link
               className="author-name ml-2 text-reset text-decoration-none"
-              to="/"
+              to={`/users/${article.author_id}`}
             >
               {article.author}
             </Link>
@@ -40,10 +40,10 @@ const ArticlePreview = ({ article }) => {
           <div className="article-content-preview mb-2">
             {htmlToText(article.detail, {
               baseElement: 'p',
-            }).slice(0, 130)}
+            }).slice(0, 165)}
             {htmlToText(article.detail, {
               baseElement: 'p',
-            }).length > 130 && '...'}
+            }).length > 165 && '...'}
           </div>
           <div className="d-flex align-items-center justify-content-between">
             <small className="article-preview-info text-muted">

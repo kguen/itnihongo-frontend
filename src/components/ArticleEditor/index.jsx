@@ -140,6 +140,7 @@ const ArticleEditor = () => {
           value={title}
           placeholder="Article title"
           onChange={event => setTitle(event.target.value)}
+          required
           minLength={1}
           maxLength={100}
         />

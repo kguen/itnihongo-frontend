@@ -9,6 +9,8 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ArticleEditor from './components/ArticleEditor';
 import ArticleDetails from './components/ArticleDetails';
+import ProfileEdit from './components/ProfileEdit';
+import ProfileView from './components/ProfileView';
 import UserContext from './contexts/UserContext';
 import AlertContext from './contexts/AlertContext';
 import tokenConfig from './utils/tokenConfig';
@@ -100,8 +102,12 @@ const App = () => {
                 path="/articles/:id/edit/"
                 component={ArticleEditor}
               />
+              <PrivateRoute exact path="/me/edit/" component={ProfileEdit} />
               <Route exact path="/articles/:id">
                 <ArticleDetails />
+              </Route>
+              <Route exact path="/users/:id">
+                <ProfileView />
               </Route>
             </Switch>
           </Router>

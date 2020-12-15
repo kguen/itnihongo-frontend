@@ -1,0 +1,40 @@
+.profile-edit {
+  .column-tabs {
+    width: 23%;
+    flex: 0 1 auto;
+    gap: 1.3rem;
+
+    h4 {
+      font-size: 1.4rem;
+    }
+    button {
+      align-self: flex-start;
+      border: none;
+      outline: none;
+      padding: 0;
+      color: var(--gray);
+      font-size: 1.1rem;
+      padding-bottom: 0.4rem;
+      padding-right: 0.5rem;
+      text-align: left;
+      font-weight: 400;
+      border-bottom: 2px solid white;
+      background: transparent;
+      transition: color 0.1s ease-in-out, font-weight 0.1s ease-in-out,
+        border-bottom-color 0.1s ease-in-out;
+    }
+    button.active {
+      font-weight: 500;
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+  }
+  .display-content {
+    flex: 1 1 77%;
+    .tab-title {
+      width: 100%;
+      font-size: 1.6rem;
+      padding-bottom: 1rem;
+    }
+  }
+}

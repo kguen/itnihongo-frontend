@@ -21,10 +21,10 @@
   }
   .custom-file-label {
     border: none;
-    color: grey;
+    color: var(--gray);
   }
   .has-image .custom-file-label {
-    color: black;
+    color: #495057;
   }
   .form-tags {
     margin-left: 0.7rem;

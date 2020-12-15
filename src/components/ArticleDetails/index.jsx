@@ -246,7 +246,7 @@ const ArticleDetails = () => {
       <div className="article-info d-flex flex-column">
         <Link
           className="author-info text-reset text-decoration-none border-bottom pb-3"
-          to="/"
+          to={`/users/${article.author_id}`}
         >
           <img
             src={article.author_avatar || DefaultAvatar}
@@ -303,7 +303,10 @@ const ArticleDetails = () => {
             className="rounded-circle"
           />
           <div className="ml-2">
-            <Link className="text-reset text-decoration-none" to="/">
+            <Link
+              className="text-reset text-decoration-none"
+              to={`/users/${article.author_id}`}
+            >
               {article.author}
             </Link>
             <div className="text-muted">
@@ -363,7 +366,10 @@ const ArticleDetails = () => {
                   className="rounded-circle"
                 />
                 <div className="comment-author">
-                  <Link className="text-reset text-decoration-none" to="/">
+                  <Link
+                    className="text-reset text-decoration-none"
+                    to={`/users/${item.user_id}`}
+                  >
                     {item.user}
                   </Link>
                   <div className="text-muted">
