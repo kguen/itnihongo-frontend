@@ -45,7 +45,6 @@ const ArticleEditor = () => {
           }
         })
         .catch(err => {
-          console.log(err);
           history.push('/');
           setAlert({
             hasAlert: true,

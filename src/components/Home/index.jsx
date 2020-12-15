@@ -51,7 +51,6 @@ const Home = () => {
         });
       });
   }, []);
-  console.log(topUsers);
 
   return (
     <div className="d-flex mt-5 home-container">

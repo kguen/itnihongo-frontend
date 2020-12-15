@@ -53,7 +53,13 @@ const SignUp = () => {
             });
             history.push('/login');
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            setAlert({
+              hasAlert: true,
+              message: `${err.response.data.errors[0]}.`,
+              error: true,
+            });
+          });
       }}
       initialValues={{
         fullName: '',

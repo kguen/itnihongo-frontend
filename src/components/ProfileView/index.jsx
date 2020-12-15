@@ -78,7 +78,7 @@ const ProfileView = () => {
       </Link>
       <div className="profile-articles">
         {articles.map(article => (
-          <div className="profile-article-content">
+          <div className="profile-article-content" key={article.id}>
             <Link
               to={`/articles/${article.id}`}
               className="text-decoration-none text-reset"
