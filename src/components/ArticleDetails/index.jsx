@@ -311,10 +311,7 @@ const ArticleDetails = () => {
             </Link>
             <div className="text-muted">
               {dayjs(article.updated_at).fromNow()} ·{' '}
-              {Math.max(
-                1,
-                Math.ceil(extractText(article.content).length / 250)
-              )}{' '}
+              {Math.max(1, Math.ceil(extractText(article.detail).length / 350))}{' '}
               min read
             </div>
           </div>

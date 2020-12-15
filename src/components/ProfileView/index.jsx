@@ -104,7 +104,7 @@ const ProfileView = () => {
                 Read more ·{' '}
                 {Math.max(
                   1,
-                  Math.ceil(extractText(article.content).length / 250)
+                  Math.ceil(extractText(article.detail).length / 350)
                 )}{' '}
                 min read
               </div>
