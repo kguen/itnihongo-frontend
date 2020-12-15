@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
-import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { Button, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 import UserContext from '../../contexts/UserContext';
 import AlertContext from '../../contexts/AlertContext';
 import tokenConfig from '../../utils/tokenConfig';
+import DefaultAvatar from '../../assets/images/default-avatar.png';
+import BootstrapLogo from '../../assets/images/bootstrap.svg';
 import './styles.scss';
 
 const Header = () => {
@@ -26,6 +28,7 @@ const Header = () => {
       data: null,
       token: null,
       liked: [],
+      avatar: null,
     });
     setAlert({
       hasAlert: true,
@@ -74,7 +77,7 @@ const Header = () => {
         className="rounded-circle"
         width="40"
         height="40"
-        src="https://miro.medium.com/fit/c/262/262/1*LoU1WYCDpbNqNj2MKssqAA.jpeg"
+        src={user.avatar || DefaultAvatar}
         alt="user avatar"
       />
     </button>
@@ -86,12 +89,7 @@ const Header = () => {
         to="/"
         className="navbar-brand text-reset text-decoration-none d-flex logo align-items-center"
       >
-        <img
-          width="25"
-          src="https://getbootstrap.com/docs/4.5/assets/brand/bootstrap-solid.svg"
-          height="25"
-          alt="bootstrap logo"
-        />
+        <img width="25" height="25" alt="bootstrap logo" src={BootstrapLogo} />
         <span className="lead ml-2">Tech Blog</span>
       </Link>
       {user.token ? (
@@ -114,14 +112,14 @@ const Header = () => {
           )}
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} />
-            <Dropdown.Menu align="right">
+            <Dropdown.Menu align="right" className="mt-2">
               <Dropdown.Header>
                 <div className="d-flex align-items-center">
                   <img
                     className="rounded-circle mr-2"
                     width="40"
                     height="40"
-                    src="https://miro.medium.com/fit/c/262/262/1*LoU1WYCDpbNqNj2MKssqAA.jpeg"
+                    src={user.avatar || DefaultAvatar}
                     alt="user avatar"
                   />
                   <div className="ml-1">

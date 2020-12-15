@@ -48,6 +48,8 @@ const Login = () => {
               ...user,
               data: null,
               token: null,
+              liked: [],
+              avatar: null,
             });
             setAlert({
               hasAlert: true,

@@ -15,6 +15,7 @@ import UserContext from '../../contexts/UserContext';
 import AlertContext from '../../contexts/AlertContext';
 import tokenConfig from '../../utils/tokenConfig';
 import extractText from '../../utils/extractText';
+import DefaultAvatar from '../../assets/images/default-avatar.png';
 import './styles.scss';
 
 const ArticleDetails = () => {
@@ -99,8 +100,9 @@ const ArticleDetails = () => {
       .then(({ data }) => {
         setComments([
           {
-            user: user.data.user_name,
             ...data.data,
+            user: user.data.user_name,
+            user_avatar: user.avatar,
             editing: false,
             editContent: data.data.detail,
           },
@@ -137,6 +139,7 @@ const ArticleDetails = () => {
         newComments[index] = {
           ...data.data,
           user: user.data.user_name,
+          user_avatar: user.avatar,
           editing: false,
           editContent: data.data.detail,
         };
@@ -246,7 +249,7 @@ const ArticleDetails = () => {
           to="/"
         >
           <img
-            src="https://miro.medium.com/fit/c/262/262/1*LoU1WYCDpbNqNj2MKssqAA.jpeg"
+            src={article.author_avatar || DefaultAvatar}
             alt="author avatar"
             width="40"
             height="40"
@@ -254,7 +257,8 @@ const ArticleDetails = () => {
           />
           <div className="mt-2 author-name">{article.author}</div>
           <div className="mt-2 text-muted author-desc">
-            Author, writing contents for programmers.
+            {article.author_bio ||
+              'Author, writing contents for Tech Blog readers.'}
           </div>
         </Link>
         <div className="d-flex text-muted align-items-center like-container">
@@ -292,7 +296,7 @@ const ArticleDetails = () => {
         )}
         <div className="small-info d-flex align-items-center mb-4">
           <img
-            src="https://miro.medium.com/fit/c/262/262/1*LoU1WYCDpbNqNj2MKssqAA.jpeg"
+            src={article.author_avatar || DefaultAvatar}
             alt="author avatar"
             width="40"
             height="40"
@@ -352,17 +356,14 @@ const ArticleDetails = () => {
             <div className="comment px-3 py-4" key={item.updated_at}>
               <div className="comment-info d-flex align-items-center">
                 <img
-                  src="https://miro.medium.com/fit/c/262/262/1*HQTxFkIf5fymNTatLc0qjA.jpeg"
-                  alt="author avatar"
+                  src={item.user_avatar || DefaultAvatar}
+                  alt="comment's author avatar"
                   width="40"
                   height="40"
                   className="rounded-circle"
                 />
-                <div className="ml-2">
-                  <Link
-                    className="text-reset text-decoration-none comment-author"
-                    to="/"
-                  >
+                <div className="comment-author">
+                  <Link className="text-reset text-decoration-none" to="/">
                     {item.user}
                   </Link>
                   <div className="text-muted">

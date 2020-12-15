@@ -6,6 +6,7 @@ import { HiOutlineThumbUp } from 'react-icons/hi';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import extractText from '../../utils/extractText';
+import DefaultAvatar from '../../assets/images/default-avatar.png';
 import './styles.scss';
 
 const ArticlePreview = ({ article }) => {
@@ -17,7 +18,7 @@ const ArticlePreview = ({ article }) => {
         <div className="d-flex align-items-center justify-content-between mb-2">
           <div className="article-author">
             <img
-              src="https://miro.medium.com/fit/c/262/262/1*LoU1WYCDpbNqNj2MKssqAA.jpeg"
+              src={article.author_avatar || DefaultAvatar}
               alt="author avatar"
               width="20"
               height="20"

@@ -19,6 +19,7 @@ const App = () => {
     token: localStorage.getItem('token'),
     data: null,
     liked: [],
+    avatar: null,
   });
   const [alert, setAlert] = useState({
     hasAlert: false,
@@ -41,6 +42,7 @@ const App = () => {
             ...user,
             data: data.data,
             liked: data.liked,
+            avatar: data.avatar,
           });
         })
         .catch(err => {
@@ -49,6 +51,7 @@ const App = () => {
             ...user,
             token: null,
             data: null,
+            avatar: null,
             liked: [],
           });
         });
