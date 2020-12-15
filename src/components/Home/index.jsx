@@ -105,7 +105,7 @@ const Home = () => {
         <h3 className="mb-5">Top authors</h3>
         {topUsers.map(item => (
           <div
-            className="d-flex align-item-center mb-4 user-info"
+            className="d-flex align-items-center mb-4 user-info"
             key={item.id}
           >
             <img
