@@ -266,6 +266,7 @@ const ArticleDetails = () => {
             className="like-button"
             type="button"
             onClick={handleLikePost}
+            disabled={!user.token}
           >
             {liked ? (
               <HiThumbUp className="info-icon like-icon-active " />
