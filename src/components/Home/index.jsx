@@ -89,6 +89,7 @@ const Home = () => {
           />
           {[...Array(totalPage).keys()].map(item => (
             <Pagination.Item
+              key={item}
               active={item + 1 === page}
               onClick={() => setPage(item + 1)}
             >

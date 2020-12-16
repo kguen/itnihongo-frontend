@@ -33,17 +33,17 @@ const ProfileEditForm = () => {
     if (formData.bio) {
       submitData.append('bio', formData.bio);
     } else {
-      submitData.append('bio', null);
+      submitData.append('bio', '');
     }
     if (formData.age) {
       submitData.append('age', formData.age);
     } else {
-      submitData.append('age', null);
+      submitData.append('age', '');
     }
     if (formData.gender) {
       submitData.append('gender', formData.gender);
     } else {
-      submitData.append('gender', null);
+      submitData.append('gender', '0');
     }
     if (formData.avatar) submitData.append('avatar', formData.avatar);
 
