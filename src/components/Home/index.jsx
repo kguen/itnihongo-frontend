@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { Pagination } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ArticlePreview from '../ArticlePreview';
 import AlertContext from '../../contexts/AlertContext';
@@ -104,8 +105,9 @@ const Home = () => {
       <div className="top-authors d-flex flex-column">
         <h3 className="mb-5">Top authors</h3>
         {topUsers.map(item => (
-          <div
-            className="d-flex align-items-center mb-4 user-info"
+          <Link
+            to={`/users/${item.id}`}
+            className="text-reset text-decoration-none d-flex align-items-center mb-4 user-info"
             key={item.id}
           >
             <img
@@ -123,7 +125,7 @@ const Home = () => {
                 {item.bio || 'Author, writing contents for Tech Blog readers.'}
               </small>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
